@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Case Closed Test Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-28 -34 56 68'%3E%3Cpath d='M-24,-30 L11,-30 L24,-17 L24,30 L19.2,24 L14.4,30 L9.6,24 L4.8,30 L0,24 L-4.8,30 L-9.6,24 L-14.4,30 L-19.2,24 L-24,30 Z' fill='%231F4D3A'/%3E%3Cpath d='M11,-30 L11,-17 L24,-17 Z' fill='%23D9A21B'/%3E%3Cpath d='M-12,2 L-3,11 L13,-8' fill='none' stroke='%23FFFDF8' stroke-width='6.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
+<style>
+/* One narrow reading column, like a printed instruction card; same tokens as the Case Closed site. */
+:root {
+  --paper: #F4F6F1; --surface: #FFFFFF; --ink: #12241B; --muted: #56685D; --line: #D6DED6;
+  --green: #1C4D36; --green-ink: #F4F6F1; --green-soft: #E2ECE4; --green-text: #1C4D36;
+  --flag: #E9B93A; --flag-soft: #FBF0CC; --flag-text: #6B4E00;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0D1712; --surface: #15231B; --ink: #E9EEE7; --muted: #9DB0A3; --line: #2A3B31;
+  --green: #8CCBA5; --green-ink: #0D1712; --green-soft: #1C3127; --green-text: #9AD6B2;
+  --flag-soft: #3A3014; --flag-text: #F2D27A; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #0D1712; --surface: #15231B; --ink: #E9EEE7; --muted: #9DB0A3; --line: #2A3B31;
+  --green: #8CCBA5; --green-ink: #0D1712; --green-soft: #1C3127; --green-text: #9AD6B2;
+  --flag-soft: #3A3014; --flag-text: #F2D27A; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--font-body); margin: 0; }
+.wrap { max-width: 620px; margin: 0 auto; padding-block: 32px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.15; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(30px, 7vw, 40px); font-weight: 800; }
+h2 { font-size: 22px; }
+p { margin: 0; }
+.brand { display: flex; align-items: center; gap: 10px; font: 800 17px var(--font-display); color: var(--green-text); }
+.brand svg { width: 26px; height: 32px; }
+.lede { color: var(--muted); font-size: 17px; max-width: 60ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.facts span { background: var(--green-soft); color: var(--green-text); border-radius: 99px; padding: 4px 12px; font-size: 14px; font-weight: 500; }
+section { display: grid; gap: 14px; }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; gap: 16px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 4px 14px; }
+.steps li::before { content: counter(s); grid-row: span 3; width: 34px; height: 34px; border-radius: 50%; background: var(--green); color: var(--green-ink); display: grid; place-items: center; font: 500 15px var(--font-mono); }
+.steps b { font-size: 17px; }
+.steps span { color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; border-radius: 99px; background: var(--green); color: var(--green-ink); font-weight: 600; font-size: 17px; text-decoration: none; justify-self: start; margin-top: 6px; }
+.btn:focus-visible { outline: 3px solid var(--flag); outline-offset: 3px; }
+.tip { background: var(--flag-soft); color: var(--ink); border: 1.5px solid var(--flag); border-radius: 14px; padding: 12px 14px; font-size: 15px; }
+.tip b { color: var(--flag-text); }
+.qs { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.qs li { padding: 14px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 30px 1fr; gap: 8px; }
+.qs .n { font: 500 14px var(--font-mono); color: var(--muted); padding-top: 2px; }
+.qs small { display: block; color: var(--muted); font-size: 14px; }
+.scale { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.scale i { font-style: normal; width: 36px; height: 36px; border: 1.5px solid var(--line); border-radius: 10px; display: grid; place-items: center; font: 500 14px var(--font-mono); }
+footer { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+
+<div class="wrap">
+  <div class="brand"><svg viewBox="-28 -34 56 68" aria-hidden="true"><path d="M-24,-30 L11,-30 L24,-17 L24,30 L19.2,24 L14.4,30 L9.6,24 L4.8,30 L0,24 L-4.8,30 L-9.6,24 L-14.4,30 L-19.2,24 L-24,30 Z" fill="var(--green)"/><path d="M11,-30 L11,-17 L24,-17 Z" fill="var(--flag)"/><path d="M-12,2 L-3,11 L13,-8" fill="none" stroke="var(--green-ink)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Case Closed</div>
+
+  <header style="display:grid;gap:12px">
+    <h1>Thanks for testing Case Closed.</h1>
+    <p class="lede">Case Closed updates an Excel budget from a bank statement. You swipe each purchase to approve it, and the app writes it into the spreadsheet. You'll try it with a made-up student named Jordan, so you don't need any of your own money info.</p>
+    <div class="facts"><span>About 5 minutes</span><span>Use your phone</span><span>Nothing of yours needed</span></div>
+  </header>
+
+  <section aria-labelledby="do">
+    <h2 id="do">What to do</h2>
+    <ol class="steps">
+      <li><b>Open the app</b><span>Use the button below. A computer works too.</span><a class="btn" id="openApp" href="case-closed-app.html" target="_blank" rel="noopener">Open Case Closed</a></li>
+      <li><b>Swipe the three practice cards</b><span>They're on the start screen. Swipe right to approve, left to skip, and watch the rows appear below them.</span></li>
+      <li><b>Tap "See how it works"</b><span>Do Jordan's November update: look at the budget, add Jordan's card statement, and swipe through the purchases.</span></li>
+      <li><b>Look at the budget at the end</b><span>The bars should have moved. If you have Excel, you can download Jordan's file and find the new rows on the Spending Tracker tab.</span></li>
+    </ol>
+    <p class="tip"><b>Yellow boxes</b> tell you what to tap next. Try to get through it without asking for help. Where you get stuck is exactly what we want to know.</p>
+  </section>
+
+  <section aria-labelledby="ask">
+    <h2 id="ask">Then answer these</h2>
+    <p class="lede" style="font-size:16px">Tell Isaiah your answers out loud or in a text. Short answers are fine.</p>
+    <ol class="qs">
+      <li><span class="n">1</span><span>In one sentence, what does Case Closed do?</span></li>
+      <li><span class="n">2</span><span>Was there any moment you weren't sure what to tap? Where?</span></li>
+      <li><span class="n">3</span><span>How long did Jordan's update feel like it took?</span></li>
+      <li><span class="n">4</span><span>How do you keep track of your own spending today, if at all?<small>An app, a spreadsheet, your bank app, or nothing.</small></span></li>
+      <li><span class="n">5</span><span>How likely are you to use something like this for your own money? Why?<div class="scale" aria-label="1 not likely to 5 very likely"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i></div></span></li>
+      <li><span class="n">6</span><span>What one change would make you use it?</span></li>
+    </ol>
+  </section>
+
+  <footer>Case Closed is a student project for MGMT 342 at Xavier University. The app only reads the files you open in it and never connects to a bank.</footer>
+</div>
+<script>if (/claude/i.test(location.hostname)) document.getElementById('openApp').href = 'https://claude.ai/artifact/GkjN322B77qTrjzqEhaLmt';</script>
+</body>
+</html>
